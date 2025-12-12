@@ -1,0 +1,85 @@
+================================================================================
+DATABASE DESIGN DOCUMENT
+Local Store Inventory Manager
+CS348 Project - Stage 2
+================================================================================
+
+DATABASE: SQLite (data.db)
+
+================================================================================
+TABLE 1: Categories
+================================================================================
+
+Attributes:
+  - category_id  (INTEGER)
+  - name         (TEXT)
+
+Primary Key (PK):
+  - category_id
+
+Foreign Keys (FK):
+  - None
+
+Constraints:
+  - category_id: AUTOINCREMENT, NOT NULL
+  - name: UNIQUE, NOT NULL
+
+Description:
+  Stores product categories (e.g., "Electronics", "Books", "Clothing").
+
+
+================================================================================
+TABLE 2: Products
+================================================================================
+
+Attributes:
+  - product_id   (INTEGER)
+  - name         (TEXT)
+  - price        (REAL)
+  - stock        (INTEGER)
+  - category_id  (INTEGER)
+
+Primary Key (PK):
+  - product_id
+
+Foreign Keys (FK):
+  - category_id → Categories(category_id)
+
+Constraints:
+  - product_id: AUTOINCREMENT, NOT NULL
+  - name: NOT NULL
+  - price: NOT NULL
+  - stock: NOT NULL, DEFAULT 0
+  - category_id: NOT NULL
+
+Description:
+  Stores product inventory information. Each product belongs to exactly one
+  category via the category_id foreign key.
+
+
+================================================================================
+RELATIONSHIPS
+================================================================================
+
+Categories (1) ──< (Many) Products
+
+Relationship Type: One-to-Many
+  - One category can have many products
+  - Each product belongs to exactly one category
+  - Enforced by foreign key: Products.category_id → Categories.category_id
+
+
+================================================================================
+SUMMARY
+================================================================================
+
+Number of Tables: 2
+Number of Primary Keys: 2
+  - Categories.category_id
+  - Products.product_id
+
+Number of Foreign Keys: 1
+  - Products.category_id → Categories.category_id
+
+================================================================================
+
